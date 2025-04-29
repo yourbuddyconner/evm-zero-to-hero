@@ -40,6 +40,123 @@ Post-Merge, Ethereum adopted a more modular architecture with two distinct clien
 
 This separation of concerns allows each layer to evolve more independently while maintaining communication through a standardized interface.
 
+#### Ethereum's Post-Merge Architecture
+
+```mermaid
+flowchart TB
+    subgraph UserApps ["User Applications"]
+        Wallet["Wallets"]
+        DApps["DApps"]
+        Tools["Dev Tools"]
+    end
+
+    subgraph "Execution Layer (EL)"
+        direction TB
+        EL["EL Clients<br>(Geth, Nethermind, Erigon, Reth)"]
+        
+        subgraph "EL Responsibilities"
+            direction TB
+            EVM["EVM Execution"]
+            State["State Management"]
+            TxPool["Transaction Pool"]
+            ELNetwork["P2P Networking (devp2p)"]
+        end
+        
+        EL --- EVM
+        EL --- State
+        EL --- TxPool
+        EL --- ELNetwork
+    end
+    
+    subgraph "Consensus Layer (CL)"
+        direction TB
+        CL["CL Clients<br>(Prysm, Lighthouse, Nimbus, Teku)"]
+        
+        subgraph "CL Responsibilities"
+            direction TB
+            PoS["Proof of Stake"]
+            Validators["Validator Management"]
+            Finality["Block Finalization"]
+            CLNetwork["P2P Networking (libp2p)"]
+        end
+        
+        CL --- PoS
+        CL --- Validators
+        CL --- Finality
+        CL --- CLNetwork
+    end
+    
+    subgraph "EngineAPI"
+        direction LR
+        ForkchoiceUpdated["forkchoiceUpdated<br>(Chain Head)"]
+        NewPayload["newPayload<br>(Execute Block)"]
+        GetPayload["getPayload<br>(Create Block)"]
+    end
+    
+    %% External Connections
+    P2P["Ethereum P2P Network"]
+    JSONRPC["JSON-RPC API"]
+    
+    %% Connections
+    Wallet -- "eth_sendRawTransaction<br>eth_call, etc." --> JSONRPC
+    DApps -- "Contract Interaction" --> JSONRPC
+    Tools -- "Block/State Queries" --> JSONRPC
+    
+    JSONRPC -- "API Requests" --> EL
+    EL -- "Transaction/Block Data" --> ELNetwork
+    ELNetwork <--> P2P
+    CLNetwork <--> P2P
+    
+    EL <--> ForkchoiceUpdated
+    EL <--> NewPayload
+    EL <--> GetPayload
+    CL <--> ForkchoiceUpdated
+    CL <--> NewPayload
+    CL <--> GetPayload
+    
+    %% Styling
+    classDef el fill:#f08c78,stroke:#333,stroke-width:1px,color:#000
+    classDef cl fill:#7fb7e8,stroke:#333,stroke-width:1px,color:#000
+    classDef api fill:#f0e878,stroke:#333,stroke-width:1px,color:#000
+    classDef ext fill:#97d175,stroke:#333,stroke-width:1px,color:#000
+    classDef user fill:#e0e0e0,stroke:#333,stroke-width:2px,color:#000
+    
+    class EL el
+    class EVM el
+    class State el
+    class TxPool el
+    class ELNetwork el
+    
+    class CL cl
+    class PoS cl
+    class Validators cl
+    class Finality cl
+    class CLNetwork cl
+    
+    class EngineAPI api
+    class ForkchoiceUpdated api
+    class NewPayload api
+    class GetPayload api
+    
+    class P2P ext
+    class JSONRPC ext
+    
+    class Wallet user
+    class DApps user
+    class Tools user
+    class UserApps user
+```
+
+The diagram above illustrates the current Ethereum architecture after The Merge:
+
+- **User Applications** interact with Ethereum through JSON-RPC APIs
+- **Execution Layer (EL)** handles transaction processing, state management, and EVM execution
+- **Consensus Layer (CL)** manages consensus through Proof of Stake and validator operations
+- Both layers communicate via the **Engine API**, which has specific methods for block proposal and execution
+- Both layers connect to the broader Ethereum network through their respective P2P networking stacks
+
+This architecture enables a cleaner separation of concerns while allowing each layer to specialize in its core functions.
+
 ### The Merge: Architectural Implications
 
 The Merge fundamentally changed how blocks are produced and validated in Ethereum:
