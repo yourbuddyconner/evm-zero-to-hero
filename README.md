@@ -29,7 +29,6 @@ If you can write idiomatic Rust, you can ship a consensus-safe patch to an Ether
 │   ├── eip-grep/       # Track 2 CLI helper
 │   ├── reth-patches/   # Track 4-8 guided forks
 │   └── fuzz-differ/    # Track 9 differential fuzzer
-├── capstone/           # Blank scaffold for your final project
 ├── docs/               # Slides, hand-outs, hard-fork "cheat sheets"
 └── README.md
 ```
@@ -53,6 +52,45 @@ If you can write idiomatic Rust, you can ship a consensus-safe patch to an Ether
 | 10 | Governance | EIP etiquette, release flow | Draft a meta-EIP |
 
 Full descriptions live in [`docs/syllabus.md`](docs/syllabus.md).  
+
+---
+
+## 📚 Course Materials
+
+We've developed comprehensive educational materials to accompany this course:
+
+### Textbook-Style Track Materials
+
+Each track has a dedicated textbook-style document that covers:
+- Core concepts and theory
+- Detailed explanations of key components
+- Step-by-step exercises
+- Troubleshooting guides and best practices
+
+Browse all track materials in the [`docs/`](docs/) directory or jump directly to a specific track:
+
+- [Track 0: Orientation](docs/track-0.md) - Setup and introduction to Ethereum's architecture
+- [Track 1: Ethereum Fundamentals](docs/track-1.md) - Accounts, MPT, gas, and core data structures
+- [Track 2: EIP Bootcamp](docs/track-2.md) - EIP process and analyzing protocol changes
+- [Track 3: Opcode + VM](docs/track-3.md) - Deep dive into the EVM, instruction set, and gas
+- [Track 4: Reth tour I](docs/track-4.md) - Reth's architecture, storage, and execution pipeline
+- [Track 5: Reth tour II](docs/track-5.md) - devp2p networking and sync strategies
+- [Track 6: Consensus bridge](docs/track-6.md) - Engine API and EL/CL interaction
+- [Track 7: Modern upgrades](docs/track-7.md) - Implementation of EIP-4844, EOF, and more
+- [Track 8: Performance](docs/track-8.md) - Profiling, flamegraphs, and optimization
+- [Track 9: Security testing](docs/track-9.md) - Invariant testing and fuzzing
+- [Track 10: Governance](docs/track-10.md) - EIP process, release flow, and community contribution
+
+### Reference Materials
+
+- [EIP Cheat Sheets](docs/eip-cheatsheets/) - Quick reference guides for key EIPs:
+  - [EIP-1: EIP Purpose and Guidelines](docs/eip-cheatsheets/eip-1.md) - The meta-document that governs the EIP process
+  - [EIP-1559: Fee Market Change](docs/eip-cheatsheets/eip-1559.md) - The base fee and fee burning mechanism
+  - [EIP-4844: Proto-Danksharding](docs/eip-cheatsheets/eip-4844.md) - Blob transactions for L2 data availability
+  
+- [Fork History](docs/fork-history.md) - Comprehensive timeline of all Ethereum network upgrades from genesis to present
+
+See the [docs README](docs/README.md) for a complete guide to all course materials.
 
 ---
 
